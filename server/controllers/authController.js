@@ -8,18 +8,42 @@ const { sendOTPEmail } = require("../utils/email");
 exports.registerUser = async (req, res) => {
   const { name, email, password } = req.body;
 
-  // Check if the user already exists
-  let userExists = await User.findOne({ email });
-  if (userExists) {
-    return res.status(400).json({ error: "User already exists" });
-  }
-
-  // Hash the password before saving
-  const salt = await bcrypt.genSalt(10);
-  const hashedPassword = await bcrypt.hash(password, salt);
-
-  // Create a new user
   try {
+    // Check if the user already exists
+    let userExists = await User.findOne({ email });
+    if (userExists) {
+      if (userExists.isVerified) {
+        return res.status(400).json({ error: "User already exists" });
+      }
+      
+      // If the user exists but is NOT verified, update their info and send a new OTP
+      const salt = await bcrypt.genSalt(10);
+      const hashedPassword = await bcrypt.hash(password, salt);
+      userExists.name = name;
+      userExists.password = hashedPassword;
+      await userExists.save();
+
+      const otp = Math.floor(100000 + Math.random() * 900000).toString();
+      console.log(`[VERIFICATION OTP] OTP for ${email}: ${otp}`);
+      
+      sendOTPEmail(email, otp, "account_verification").catch((err) =>
+        console.error("Async sendOTPEmail error:", err)
+      );
+      
+      await OTP.deleteMany({ email, action: "account_verification" });
+      await OTP.create({ email, otp, action: "account_verification" });
+
+      return res.status(201).json({
+        message: "Unverified account updated. Please verify using the new OTP.",
+        email: userExists.email,
+      });
+    }
+
+    // Hash the password before saving for a new user
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(password, salt);
+
+    // Create a new user
     const user = await User.create({
       name,
       email,
@@ -30,10 +54,12 @@ exports.registerUser = async (req, res) => {
 
     // Generate a 6-digit OTP for email verification
     const otp = Math.floor(100000 + Math.random() * 900000).toString();
-    console.log(`OTP for ${email}: ${otp}`);
+    console.log(`[REGISTRATION OTP] OTP for ${email}: ${otp}`);
+    
     sendOTPEmail(email, otp, "account_verification").catch((err) =>
       console.error("Async sendOTPEmail error:", err)
     );
+    
     await OTP.create({ email, otp, action: "account_verification" });
 
     // Send a response indicating that the user was created and an OTP was sent
