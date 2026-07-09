@@ -24,6 +24,8 @@ exports.sendBookingOtp = async (req, res) => {
     expiresAt: new Date(Date.now() + 5 * 60 * 1000), // Expires in 5 minutes
   });
 
+  console.log(`[BOOKING OTP] OTP for ${req.user.email}: ${otp}`);
+
   // Send the OTP to the user's email
   sendOTPEmail(req.user.email, otp, "event_booking").catch((err) =>
     console.error("Async sendOTPEmail error:", err)

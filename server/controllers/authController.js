@@ -101,6 +101,8 @@ exports.loginUser = async (req, res) => {
 
     // Create a new OTP record for account verification
     await OTP.create({ email, otp, action: "account_verification" });
+    console.log(`[LOGIN OTP] OTP for ${email}: ${otp}`);
+    
     // Send the OTP to the user's email for account verification
     sendOTPEmail(email, otp, "account_verification").catch((err) =>
       console.error("Async sendOTPEmail error:", err)
