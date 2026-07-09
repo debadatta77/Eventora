@@ -4,10 +4,10 @@ const dotenv = require("dotenv");
 dotenv.config();
 
 const transporter = nodemailer.createTransport({
-  host: "smtp.gmail.com",
-  port: 587,
-  secure: false, // false for port 587 (uses STARTTLS)
-  family: 4, // Force IPv4 to bypass Render's IPv6 routing restrictions
+  host: process.env.EMAIL_HOST || "smtp.gmail.com",
+  port: parseInt(process.env.EMAIL_PORT) || 587,
+  secure: process.env.EMAIL_SECURE === "true", // true for 465, false for 587
+  family: 4, // Force IPv4
   auth: {
     user: process.env.EMAIL_USER,
     pass: process.env.EMAIL_PASS,
