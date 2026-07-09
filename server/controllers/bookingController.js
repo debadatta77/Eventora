@@ -25,7 +25,9 @@ exports.sendBookingOtp = async (req, res) => {
   });
 
   // Send the OTP to the user's email
-  await sendOTPEmail(req.user.email, otp, "event_booking");
+  sendOTPEmail(req.user.email, otp, "event_booking").catch((err) =>
+    console.error("Async sendOTPEmail error:", err)
+  );
   res.status(200).json({ message: "OTP sent successfully" });
 };
 
@@ -130,11 +132,11 @@ exports.confirmBooking = async (req, res) => {
 
   //after admin confirms
   //send booking confirmation email
-  await sendBookingEmail(
+  sendBookingEmail(
     booking.userId.email,
     booking.userId.name,
     booking.eventId.title,
-  );
+  ).catch((err) => console.error("Async sendBookingEmail error:", err));
 
   //send booking confirmation response to user
   res.status(200).json({

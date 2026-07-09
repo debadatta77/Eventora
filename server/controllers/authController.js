@@ -31,7 +31,9 @@ exports.registerUser = async (req, res) => {
     // Generate a 6-digit OTP for email verification
     const otp = Math.floor(100000 + Math.random() * 900000).toString();
     console.log(`OTP for ${email}: ${otp}`);
-    await sendOTPEmail(email, otp, "account_verification");
+    sendOTPEmail(email, otp, "account_verification").catch((err) =>
+      console.error("Async sendOTPEmail error:", err)
+    );
     await OTP.create({ email, otp, action: "account_verification" });
 
     // Send a response indicating that the user was created and an OTP was sent
@@ -74,7 +76,9 @@ exports.loginUser = async (req, res) => {
     // Create a new OTP record for account verification
     await OTP.create({ email, otp, action: "account_verification" });
     // Send the OTP to the user's email for account verification
-    await sendOTPEmail(email, otp, "account_verification");
+    sendOTPEmail(email, otp, "account_verification").catch((err) =>
+      console.error("Async sendOTPEmail error:", err)
+    );
     return res.status(400).json({
       error:
         "Account not verified. Please check your email for the OTP to verify your account.",
