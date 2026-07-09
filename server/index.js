@@ -19,13 +19,18 @@ const allowedOrigins = [
   process.env.FRONTEND_URL,
   "http://localhost:5173",
   "http://localhost:3000",
-];
+].map(url => url ? url.replace(/\/$/, "").toLowerCase() : "");
+
 app.use(
   cors({
     origin: (origin, callback) => {
-      if (!origin || allowedOrigins.includes(origin)) {
+      if (!origin) return callback(null, true);
+      
+      const cleanOrigin = origin.replace(/\/$/, "").toLowerCase();
+      if (allowedOrigins.includes(cleanOrigin)) {
         callback(null, true);
       } else {
+        console.warn(`Blocked Origin by CORS: ${origin}`);
         callback(new Error("Not allowed by CORS"));
       }
     },
