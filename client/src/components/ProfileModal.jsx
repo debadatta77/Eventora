@@ -1,4 +1,5 @@
 import React, { useState, useContext } from "react";
+import { createPortal } from "react-dom";
 import { AuthContext } from "../context/AuthContext";
 import { FaUser, FaEnvelope, FaShieldAlt, FaLock, FaTimes, FaEdit, FaSave } from "react-icons/fa";
 
@@ -40,7 +41,7 @@ const ProfileModal = ({ isOpen, onClose }) => {
     setError("");
   };
 
-  return (
+  return createPortal(
     <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
       {/* Dark Blur Overlay */}
       <div 
@@ -197,7 +198,8 @@ const ProfileModal = ({ isOpen, onClose }) => {
           )}
         </form>
       </div>
-    </div>
+    </div>,
+    document.body
   );
 };
 
