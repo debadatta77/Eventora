@@ -27,7 +27,7 @@ const Navbar = () => {
           >
             <FaTicketAlt className="text-emerald-400 rotate-[-10deg]" /> Eventora
           </Link>
-          <div className="flex items-center gap-6">
+          <div className="flex items-center gap-3 sm:gap-6">
             <Link
               to="/"
               className={`text-sm font-semibold transition cursor-pointer ${
@@ -39,45 +39,46 @@ const Navbar = () => {
               Events
             </Link>
             {user ? (
-              <div className="flex items-center gap-4 sm:gap-6 border-l border-gray-850 pl-4 sm:pl-6">
+              <div className="flex items-center gap-3 sm:gap-5 border-l border-gray-800 pl-3 sm:pl-5">
                 <Link
                   to={user.role === "admin" ? "/admin" : "/dashboard"}
-                  className={`flex items-center gap-2 text-sm font-semibold transition ${
+                  className={`flex items-center gap-1.5 text-sm font-semibold transition ${
                     isActive("/dashboard") || isActive("/admin")
                       ? "text-emerald-400 font-bold"
                       : "text-gray-300 hover:text-white"
                   }`}
+                  title="Dashboard"
                 >
-                  <FaTachometerAlt className="text-xs" />
-                  <span>Dashboard</span>
+                  <FaTachometerAlt className="text-base sm:text-xs" />
+                  <span className="hidden sm:inline">Dashboard</span>
                 </Link>
                 
                 {/* User Avatar Circle (Clickable) */}
                 <button
                   type="button"
                   onClick={() => setIsProfileModalOpen(true)}
-                  className="flex items-center gap-2 hover:opacity-80 transition cursor-pointer focus:outline-none"
+                  className="flex items-center gap-1.5 sm:gap-2 hover:opacity-80 transition cursor-pointer focus:outline-none"
                   title="View Profile"
                 >
                   <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-emerald-400 to-teal-600 text-white flex items-center justify-center font-black text-sm shadow-sm select-none border border-emerald-300/20">
                     {user.name ? user.name.charAt(0).toUpperCase() : "U"}
                   </div>
-                  <span className="hidden md:inline text-xs font-bold text-gray-300 max-w-[100px] truncate">
+                  <span className="hidden lg:inline text-xs font-bold text-gray-300 max-w-[100px] truncate">
                     {user.name}
                   </span>
                 </button>
 
                 <button
                   onClick={handleLogout}
-                  className="bg-gray-800 hover:bg-rose-600 hover:text-white text-gray-300 px-3.5 py-1.5 rounded-lg transition-all duration-200 text-xs font-bold flex items-center gap-1.5 focus:outline-none cursor-pointer"
+                  className="bg-gray-850 hover:bg-rose-600 hover:text-white text-gray-300 p-2 sm:px-3 sm:py-1.5 rounded-lg transition-all duration-200 text-xs font-bold flex items-center gap-1.5 focus:outline-none cursor-pointer"
                   title="Logout"
                 >
-                  <FaSignOutAlt />
+                  <FaSignOutAlt className="text-sm sm:text-xs" />
                   <span className="hidden sm:inline">Logout</span>
                 </button>
               </div>
             ) : (
-              <div className="flex items-center gap-4 sm:gap-6 border-l border-gray-850 pl-4 sm:pl-6">
+              <div className="flex items-center gap-3 sm:gap-5 border-l border-gray-800 pl-3 sm:pl-5">
                 <Link
                   to="/login"
                   className={`text-sm font-semibold transition ${
@@ -90,7 +91,7 @@ const Navbar = () => {
                 </Link>
                 <Link
                   to="/register"
-                  className="bg-white text-gray-950 hover:bg-emerald-400 hover:text-white px-4 py-2 rounded-lg font-bold text-xs transition duration-200 shadow-sm"
+                  className="bg-white text-gray-950 hover:bg-emerald-400 hover:text-white px-3 py-1.5 sm:px-4 sm:py-2 rounded-lg font-bold text-xs transition duration-200 shadow-sm"
                 >
                   Sign Up
                 </Link>
