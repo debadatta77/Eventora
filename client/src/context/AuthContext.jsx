@@ -73,10 +73,24 @@ export const AuthProvider = ({ children }) => {
     localStorage.removeItem("token"); // Remove the token from localStorage
   };
 
-  // Provide the user, login, logout, verifyOtp, and register functions to the context consumers
+  // Function to handle user profile update
+  const updateProfile = async (name) => {
+    try {
+      const { data } = await api.put("/auth/profile", { name });
+      const updatedUser = { ...user, name: data.name };
+      setUser(updatedUser);
+      localStorage.setItem("user", JSON.stringify(updatedUser));
+      return data;
+    } catch (error) {
+      console.error("Profile update failed:", error);
+      throw error;
+    }
+  };
+
+  // Provide the user, login, logout, verifyOtp, register, and updateProfile functions to the context consumers
   return (
     <AuthContext.Provider
-      value={{ user, login, logout, verifyOtp, register, loading }}
+      value={{ user, login, logout, verifyOtp, register, updateProfile, loading }}
     >
       {children}
     </AuthContext.Provider>

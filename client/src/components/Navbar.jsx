@@ -1,12 +1,14 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
 import { FaTicketAlt, FaSignOutAlt, FaTachometerAlt } from "react-icons/fa";
+import ProfileModal from "./ProfileModal";
 
 const Navbar = () => {
   const { user, logout } = useContext(AuthContext);
   const navigate = useNavigate();
   const location = useLocation();
+  const [isProfileModalOpen, setIsProfileModalOpen] = useState(false);
 
   const handleLogout = () => {
     logout();
@@ -50,15 +52,20 @@ const Navbar = () => {
                   <span>Dashboard</span>
                 </Link>
                 
-                {/* User Avatar Circle */}
-                <div className="flex items-center gap-2">
+                {/* User Avatar Circle (Clickable) */}
+                <button
+                  type="button"
+                  onClick={() => setIsProfileModalOpen(true)}
+                  className="flex items-center gap-2 hover:opacity-80 transition cursor-pointer focus:outline-none"
+                  title="View Profile"
+                >
                   <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-emerald-400 to-teal-600 text-white flex items-center justify-center font-black text-sm shadow-sm select-none border border-emerald-300/20">
                     {user.name ? user.name.charAt(0).toUpperCase() : "U"}
                   </div>
                   <span className="hidden md:inline text-xs font-bold text-gray-300 max-w-[100px] truncate">
                     {user.name}
                   </span>
-                </div>
+                </button>
 
                 <button
                   onClick={handleLogout}
@@ -92,6 +99,12 @@ const Navbar = () => {
           </div>
         </div>
       </div>
+
+      {/* Profile Details Modal */}
+      <ProfileModal
+        isOpen={isProfileModalOpen}
+        onClose={() => setIsProfileModalOpen(false)}
+      />
     </nav>
   );
 };

@@ -156,3 +156,31 @@ exports.verifyOtp = async (req, res) => {
     token: generateToken(user._id, user.role), // Generate and send token
   });
 };
+
+// Update user profile (name only)
+exports.updateProfile = async (req, res) => {
+  try {
+    const { name } = req.body;
+    if (!name || name.trim() === "") {
+      return res.status(400).json({ error: "Name cannot be empty" });
+    }
+
+    const user = await User.findById(req.user._id);
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    user.name = name.trim();
+    await user.save();
+
+    res.json({
+      message: "Profile updated successfully",
+      _id: user._id,
+      name: user.name,
+      email: user.email,
+      role: user.role,
+    });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
