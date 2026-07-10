@@ -62,8 +62,8 @@ const sendBookingEmail = async (userEmail, userName, eventTitle) => {
     }
   }
 
-  // 2. If using Brevo API Key, send via HTTPS API on Port 443 (allows sending to anyone for free without domain)
-  if (config.pass.startsWith("xsmtpsib-")) {
+  // 2. If using Brevo API/SMTP Key, send via HTTPS API on Port 443 (allows sending to anyone for free without domain)
+  if (config.pass.startsWith("xsmtpsib-") || config.pass.startsWith("xkeysib-")) {
     try {
       const res = await fetch("https://api.brevo.com/v3/smtp/email", {
         method: "POST",
@@ -154,8 +154,8 @@ const sendOTPEmail = async (userEmail, otp, type) => {
     }
   }
 
-  // 2. If using Brevo API Key, send via HTTPS API on Port 443 (allows sending to anyone for free without domain)
-  if (config.pass.startsWith("xsmtpsib-")) {
+  // 2. If using Brevo API/SMTP Key, send via HTTPS API on Port 443 (allows sending to anyone for free without domain)
+  if (config.pass.startsWith("xsmtpsib-") || config.pass.startsWith("xkeysib-")) {
     try {
       const res = await fetch("https://api.brevo.com/v3/smtp/email", {
         method: "POST",
