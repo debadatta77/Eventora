@@ -3,14 +3,27 @@ const dotenv = require("dotenv");
 
 dotenv.config();
 
+// Sanitizes and trims environment variables to prevent copy-paste newlines/whitespace errors
+const getEmailConfig = () => {
+  const host = (process.env.EMAIL_HOST || "smtp.gmail.com").trim();
+  const port = parseInt((process.env.EMAIL_PORT || "587").trim());
+  const secure = (process.env.EMAIL_SECURE || "false").trim() === "true";
+  const user = (process.env.EMAIL_USER || "").trim();
+  const pass = (process.env.EMAIL_PASS || "").trim();
+  const from = (process.env.EMAIL_FROM || user).trim();
+  return { host, port, secure, user, pass, from };
+};
+
+const config = getEmailConfig();
+
 const transporter = nodemailer.createTransport({
-  host: process.env.EMAIL_HOST || "smtp.gmail.com",
-  port: parseInt(process.env.EMAIL_PORT) || 587,
-  secure: process.env.EMAIL_SECURE === "true", // true for 465, false for 587
+  host: config.host,
+  port: config.port,
+  secure: config.secure,
   family: 4, // Force IPv4
   auth: {
-    user: process.env.EMAIL_USER,
-    pass: process.env.EMAIL_PASS,
+    user: config.user,
+    pass: config.pass,
   },
 });
 
@@ -22,16 +35,16 @@ const sendBookingEmail = async (userEmail, userName, eventTitle) => {
   `;
 
   // 1. If using Resend API Key, send via HTTPS API on Port 443
-  if (process.env.EMAIL_PASS && process.env.EMAIL_PASS.startsWith("re_")) {
+  if (config.pass.startsWith("re_")) {
     try {
       const res = await fetch("https://api.resend.com/emails", {
         method: "POST",
         headers: {
-          "Authorization": `Bearer ${process.env.EMAIL_PASS}`,
+          "Authorization": `Bearer ${config.pass}`,
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          from: process.env.EMAIL_FROM || "onboarding@resend.dev",
+          from: config.from || "onboarding@resend.dev",
           to: userEmail,
           subject: `Booking Confirmed: ${eventTitle}`,
           html: html,
@@ -50,16 +63,16 @@ const sendBookingEmail = async (userEmail, userName, eventTitle) => {
   }
 
   // 2. If using Brevo API Key, send via HTTPS API on Port 443 (allows sending to anyone for free without domain)
-  if (process.env.EMAIL_PASS && process.env.EMAIL_PASS.startsWith("xsmtpsib-")) {
+  if (config.pass.startsWith("xsmtpsib-")) {
     try {
       const res = await fetch("https://api.brevo.com/v3/smtp/email", {
         method: "POST",
         headers: {
-          "api-key": process.env.EMAIL_PASS,
+          "api-key": config.pass,
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          sender: { email: process.env.EMAIL_FROM || process.env.EMAIL_USER },
+          sender: { email: config.from },
           to: [{ email: userEmail }],
           subject: `Booking Confirmed: ${eventTitle}`,
           htmlContent: html,
@@ -80,7 +93,7 @@ const sendBookingEmail = async (userEmail, userName, eventTitle) => {
   // 3. Fallback to standard SMTP
   try {
     const mailOptions = {
-      from: process.env.EMAIL_FROM || process.env.EMAIL_USER,
+      from: config.from,
       to: userEmail,
       subject: `Booking Confirmed: ${eventTitle}`,
       html: html,
@@ -114,16 +127,16 @@ const sendOTPEmail = async (userEmail, otp, type) => {
   `;
 
   // 1. If using Resend API Key, send via HTTPS API on Port 443
-  if (process.env.EMAIL_PASS && process.env.EMAIL_PASS.startsWith("re_")) {
+  if (config.pass.startsWith("re_")) {
     try {
       const res = await fetch("https://api.resend.com/emails", {
         method: "POST",
         headers: {
-          "Authorization": `Bearer ${process.env.EMAIL_PASS}`,
+          "Authorization": `Bearer ${config.pass}`,
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          from: process.env.EMAIL_FROM || "onboarding@resend.dev",
+          from: config.from || "onboarding@resend.dev",
           to: userEmail,
           subject: title,
           html: html,
@@ -142,16 +155,16 @@ const sendOTPEmail = async (userEmail, otp, type) => {
   }
 
   // 2. If using Brevo API Key, send via HTTPS API on Port 443 (allows sending to anyone for free without domain)
-  if (process.env.EMAIL_PASS && process.env.EMAIL_PASS.startsWith("xsmtpsib-")) {
+  if (config.pass.startsWith("xsmtpsib-")) {
     try {
       const res = await fetch("https://api.brevo.com/v3/smtp/email", {
         method: "POST",
         headers: {
-          "api-key": process.env.EMAIL_PASS,
+          "api-key": config.pass,
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          sender: { email: process.env.EMAIL_FROM || process.env.EMAIL_USER },
+          sender: { email: config.from },
           to: [{ email: userEmail }],
           subject: title,
           htmlContent: html,
@@ -172,7 +185,7 @@ const sendOTPEmail = async (userEmail, otp, type) => {
   // 3. Fallback to standard SMTP
   try {
     const mailOptions = {
-      from: process.env.EMAIL_FROM || process.env.EMAIL_USER,
+      from: config.from,
       to: userEmail,
       subject: title,
       html: html,
