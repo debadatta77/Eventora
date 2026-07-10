@@ -21,7 +21,7 @@ const sendBookingEmail = async (userEmail, userName, eventTitle) => {
     <p>Thank you for choosing Eventora.</p>
   `;
 
-  // If using Resend API Key, send via HTTPS API on Port 443 to bypass Render's SMTP blocks
+  // 1. If using Resend API Key, send via HTTPS API on Port 443
   if (process.env.EMAIL_PASS && process.env.EMAIL_PASS.startsWith("re_")) {
     try {
       const res = await fetch("https://api.resend.com/emails", {
@@ -49,7 +49,35 @@ const sendBookingEmail = async (userEmail, userName, eventTitle) => {
     }
   }
 
-  // Fallback to standard SMTP
+  // 2. If using Brevo API Key, send via HTTPS API on Port 443 (allows sending to anyone for free without domain)
+  if (process.env.EMAIL_PASS && process.env.EMAIL_PASS.startsWith("xsmtpsib-")) {
+    try {
+      const res = await fetch("https://api.brevo.com/v3/smtp/email", {
+        method: "POST",
+        headers: {
+          "api-key": process.env.EMAIL_PASS,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          sender: { email: process.env.EMAIL_FROM || process.env.EMAIL_USER },
+          to: [{ email: userEmail }],
+          subject: `Booking Confirmed: ${eventTitle}`,
+          htmlContent: html,
+        }),
+      });
+      const data = await res.json();
+      if (res.ok) {
+        console.log(`[BREVO API] Booking email sent successfully to ${userEmail}. ID: ${data.messageId}`);
+        return;
+      } else {
+        console.error("[BREVO API ERROR]", data);
+      }
+    } catch (error) {
+      console.error("Error sending booking email via Brevo HTTPS API:", error);
+    }
+  }
+
+  // 3. Fallback to standard SMTP
   try {
     const mailOptions = {
       from: process.env.EMAIL_FROM || process.env.EMAIL_USER,
@@ -85,7 +113,7 @@ const sendOTPEmail = async (userEmail, otp, type) => {
     </div>
   `;
 
-  // If using Resend API Key, send via HTTPS API on Port 443 to bypass Render's SMTP blocks
+  // 1. If using Resend API Key, send via HTTPS API on Port 443
   if (process.env.EMAIL_PASS && process.env.EMAIL_PASS.startsWith("re_")) {
     try {
       const res = await fetch("https://api.resend.com/emails", {
@@ -113,7 +141,35 @@ const sendOTPEmail = async (userEmail, otp, type) => {
     }
   }
 
-  // Fallback to standard SMTP
+  // 2. If using Brevo API Key, send via HTTPS API on Port 443 (allows sending to anyone for free without domain)
+  if (process.env.EMAIL_PASS && process.env.EMAIL_PASS.startsWith("xsmtpsib-")) {
+    try {
+      const res = await fetch("https://api.brevo.com/v3/smtp/email", {
+        method: "POST",
+        headers: {
+          "api-key": process.env.EMAIL_PASS,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          sender: { email: process.env.EMAIL_FROM || process.env.EMAIL_USER },
+          to: [{ email: userEmail }],
+          subject: title,
+          htmlContent: html,
+        }),
+      });
+      const data = await res.json();
+      if (res.ok) {
+        console.log(`[BREVO API] OTP email sent successfully to ${userEmail}. ID: ${data.messageId}`);
+        return;
+      } else {
+        console.error("[BREVO API ERROR]", data);
+      }
+    } catch (error) {
+      console.error("Error sending OTP email via Brevo HTTPS API:", error);
+    }
+  }
+
+  // 3. Fallback to standard SMTP
   try {
     const mailOptions = {
       from: process.env.EMAIL_FROM || process.env.EMAIL_USER,
