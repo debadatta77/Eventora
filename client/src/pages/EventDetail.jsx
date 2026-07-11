@@ -8,6 +8,7 @@ import {
   FaMapMarkerAlt,
   FaChair,
   FaMoneyBillWave,
+  FaArrowLeft,
 } from "react-icons/fa";
 
 const EventDetail = () => {
@@ -73,39 +74,55 @@ const EventDetail = () => {
 
   if (loading)
     return (
-      <div className="text-center py-20 text-xl font-semibold">Loading...</div>
+      <div className="min-h-screen bg-slate-950 flex items-center justify-center">
+        <div className="flex flex-col items-center gap-4">
+          <div className="w-10 h-10 border-4 border-emerald-500/20 border-t-emerald-400 rounded-full animate-spin" />
+          <span className="text-slate-400 text-sm font-semibold">Loading details...</span>
+        </div>
+      </div>
     );
   if (error && !event)
     return (
-      <div className="text-center py-20 text-xl text-red-500">
-        {error || "Event not found"}
+      <div className="min-h-screen bg-slate-950 flex items-center justify-center p-4">
+        <div className="bg-slate-900/60 border border-slate-800/80 rounded-2xl p-8 max-w-md text-center shadow-xl">
+          <p className="text-rose-400 text-lg font-bold mb-4">{error || "Event not found"}</p>
+          <button
+            onClick={() => navigate("/")}
+            className="bg-slate-950 border border-slate-800 hover:border-emerald-500/30 text-white font-bold py-2 px-6 rounded-xl text-xs transition duration-200 cursor-pointer"
+          >
+            Back to Events
+          </button>
+        </div>
       </div>
     );
 
   const isSoldOut = event.availableSeats <= 0;
 
   return (
-    <div className="max-w-4xl mx-auto px-4 mt-6">
+    <div className="relative max-w-5xl mx-auto px-4 mt-6 mb-16 overflow-hidden">
+      {/* Decorative Glow Blob */}
+      <div className="absolute top-1/4 right-0 w-80 h-80 bg-emerald-500/5 rounded-full blur-3xl -z-10 animate-pulse duration-[7000ms]" />
+
       {/* Back Button */}
       <button
         onClick={() => navigate("/")}
-        className="flex items-center gap-2 text-gray-600 hover:text-black font-semibold mb-6 transition duration-200 group focus:outline-none cursor-pointer"
+        className="flex items-center gap-2 text-slate-400 hover:text-white font-semibold mb-6 transition duration-200 group focus:outline-none cursor-pointer text-sm"
       >
-        <span className="group-hover:-translate-x-1 transition-transform">&larr;</span> Back to Events
+        <FaArrowLeft className="group-hover:-translate-x-1 transition-transform text-xs" /> Back to Events
       </button>
 
-      <div className="bg-white rounded-2xl shadow-xl overflow-hidden border border-gray-100">
+      <div className="bg-slate-900/60 backdrop-blur-xl rounded-3xl shadow-2xl overflow-hidden border border-slate-800/80">
         {event.imageUrl || event.image ? (
-          <div className="h-96 relative overflow-hidden group">
+          <div className="h-96 relative overflow-hidden group border-b border-slate-800/85">
             <img
               src={event.imageUrl || event.image}
               alt={event.title}
               className="w-full h-full object-cover group-hover:scale-[1.01] transition duration-700"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
+            <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-transparent to-transparent"></div>
           </div>
         ) : (
-          <div className="w-full h-64 bg-gray-900 flex items-center justify-center text-white/50 text-6xl font-black uppercase tracking-widest">
+          <div className="w-full h-64 bg-slate-950 flex items-center justify-center text-slate-600 border-b border-slate-800/85 text-6xl font-black uppercase tracking-widest select-none">
             {event.category}
           </div>
         )}
@@ -115,40 +132,40 @@ const EventDetail = () => {
             
             {/* Left Column: Title & Description */}
             <div className="flex-grow max-w-xl">
-              <div className="inline-block bg-gray-100 text-gray-800 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wide mb-4 border border-gray-205">
+              <div className="inline-block bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 text-xs font-bold px-3.5 py-1 rounded-full uppercase tracking-wide mb-4">
                 {event.category}
               </div>
-              <h1 className="text-4xl md:text-5xl font-black text-gray-900 mb-6 leading-tight">
+              <h1 className="text-4xl md:text-5xl font-black text-white mb-6 leading-tight">
                 {event.title}
               </h1>
-              <div className="border-t border-gray-100 pt-6">
-                <h3 className="text-lg font-bold text-gray-800 mb-3">About this Event</h3>
-                <p className="text-gray-600 text-md leading-relaxed whitespace-pre-line">
+              <div className="border-t border-slate-800 pt-6">
+                <h3 className="text-lg font-bold text-white mb-3">About this Event</h3>
+                <p className="text-slate-300 text-md leading-relaxed whitespace-pre-line font-medium">
                   {event.description}
                 </p>
               </div>
             </div>
 
             {/* Right Column: Booking Details Card */}
-            <div className="bg-gray-50 p-6 rounded-2xl border border-gray-100 min-w-[320px] w-full lg:w-auto shrink-0 shadow-sm flex flex-col justify-between">
+            <div className="bg-slate-950/70 p-6 rounded-2xl border border-slate-850 min-w-[320px] w-full lg:w-auto shrink-0 shadow-xl flex flex-col justify-between">
               <div>
-                <h3 className="text-lg font-bold text-gray-900 mb-6 pb-3 border-b border-gray-200/60">
+                <h3 className="text-lg font-bold text-white mb-6 pb-3 border-b border-slate-800">
                   Booking Details
                 </h3>
 
                 <div className="space-y-5 mb-8">
                   {/* Ticket Price */}
-                  <div className="flex items-center gap-4 text-gray-600">
-                    <div className="w-10 h-10 rounded-full bg-white flex items-center justify-center text-gray-900 shrink-0 border border-gray-100 shadow-sm animate-pulse-slow">
-                      <FaMoneyBillWave className="text-gray-700" />
+                  <div className="flex items-center gap-4">
+                    <div className="w-10 h-10 rounded-full bg-slate-900 border border-slate-800 flex items-center justify-center text-emerald-400 shrink-0">
+                      <FaMoneyBillWave className="text-sm" />
                     </div>
                     <div>
-                      <p className="text-[10px] font-bold text-gray-400 uppercase tracking-wider">
+                      <p className="text-[10px] font-bold text-slate-500 uppercase tracking-wider">
                         Ticket Price
                       </p>
-                      <p className="font-extrabold text-gray-950 text-lg mt-0.5">
+                      <p className="font-extrabold text-white text-lg mt-0.5">
                         {event.ticketPrice === 0 ? (
-                          <span className="text-emerald-600 font-bold">FREE ENTRY</span>
+                          <span className="text-emerald-400 font-bold">FREE ENTRY</span>
                         ) : (
                           `₹${event.ticketPrice}`
                         )}
@@ -157,33 +174,33 @@ const EventDetail = () => {
                   </div>
 
                   {/* Availability */}
-                  <div className="flex items-center gap-4 text-gray-600">
-                    <div className="w-10 h-10 rounded-full bg-white flex items-center justify-center text-gray-900 shrink-0 border border-gray-100 shadow-sm">
-                      <FaChair className="text-gray-700" />
+                  <div className="flex items-center gap-4">
+                    <div className="w-10 h-10 rounded-full bg-slate-900 border border-slate-800 flex items-center justify-center text-emerald-400 shrink-0">
+                      <FaChair className="text-sm" />
                     </div>
                     <div className="flex-grow">
-                      <p className="text-[10px] font-bold text-gray-400 uppercase tracking-wider">
+                      <p className="text-[10px] font-bold text-slate-500 uppercase tracking-wider">
                         Availability
                       </p>
-                      <p className="font-extrabold text-gray-950 mt-0.5">
-                        <span className={event.availableSeats < 10 ? "text-orange-600 animate-pulse" : "text-gray-800"}>
+                      <p className="font-extrabold text-white mt-0.5">
+                        <span className={event.availableSeats < 10 ? "text-orange-400 animate-pulse" : "text-white"}>
                           {event.availableSeats}
                         </span>{" "}
-                        / <span className="text-gray-500 font-medium">{event.totalSeats} seats</span>
+                        / <span className="text-slate-400 font-medium">{event.totalSeats} seats</span>
                       </p>
                     </div>
                   </div>
 
                   {/* Date */}
-                  <div className="flex items-center gap-4 text-gray-600">
-                    <div className="w-10 h-10 rounded-full bg-white flex items-center justify-center text-gray-900 shrink-0 border border-gray-100 shadow-sm">
-                      <FaCalendarAlt className="text-gray-700" />
+                  <div className="flex items-center gap-4">
+                    <div className="w-10 h-10 rounded-full bg-slate-900 border border-slate-800 flex items-center justify-center text-emerald-400 shrink-0">
+                      <FaCalendarAlt className="text-sm" />
                     </div>
                     <div>
-                      <p className="text-[10px] font-bold text-gray-400 uppercase tracking-wider">
+                      <p className="text-[10px] font-bold text-slate-500 uppercase tracking-wider">
                         Date & Time
                       </p>
-                      <p className="font-extrabold text-gray-850 mt-0.5">
+                      <p className="font-extrabold text-white mt-0.5">
                         {new Date(event.date).toLocaleDateString(undefined, {
                           weekday: "short",
                           month: "short",
@@ -195,19 +212,19 @@ const EventDetail = () => {
                   </div>
 
                   {/* Location */}
-                  <div className="flex items-center gap-4 text-gray-600">
-                    <div className="w-10 h-10 rounded-full bg-white flex items-center justify-center text-gray-900 shrink-0 border border-gray-100 shadow-sm">
-                      <FaMapMarkerAlt className="text-gray-700" />
+                  <div className="flex items-center gap-4">
+                    <div className="w-10 h-10 rounded-full bg-slate-900 border border-slate-800 flex items-center justify-center text-emerald-400 shrink-0">
+                      <FaMapMarkerAlt className="text-sm" />
                     </div>
                     <div className="flex-grow min-w-0">
-                      <p className="text-[10px] font-bold text-gray-400 uppercase tracking-wider">
+                      <p className="text-[10px] font-bold text-slate-500 uppercase tracking-wider">
                         Location
                       </p>
                       <a
                         href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(event.location)}`}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="font-extrabold text-gray-800 hover:text-black hover:underline block mt-0.5 truncate max-w-[200px]"
+                        className="font-extrabold text-emerald-400 hover:text-emerald-300 hover:underline block mt-0.5 truncate max-w-[200px]"
                         title="Click to view on Google Maps"
                       >
                         {event.location} &rarr;
@@ -219,14 +236,14 @@ const EventDetail = () => {
 
               {showOTP && (
                 <div className="mb-5 animate-slideIn">
-                  <label className="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-2">
+                  <label className="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">
                     Enter OTP Sent to Email
                   </label>
                   <input
                     type="text"
                     required
                     placeholder="6-digit code"
-                    className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-gray-700 outline-none transition shadow-sm font-black tracking-widest text-center text-lg bg-white"
+                    className="w-full px-4 py-3 rounded-xl border border-slate-800 bg-slate-950 text-white placeholder-slate-600 focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500/20 outline-none transition shadow-sm font-black tracking-widest text-center text-lg focus:bg-slate-950"
                     value={otp}
                     onChange={(e) => setOtp(e.target.value)}
                     maxLength="6"
@@ -237,21 +254,23 @@ const EventDetail = () => {
               <button
                 onClick={handleBooking}
                 disabled={isSoldOut || bookingLoading || (showOTP && !otp)}
-                className={`w-full py-4 px-6 rounded-xl font-bold text-md transition shadow-md duration-200 cursor-pointer ${
+                className={`w-full py-4 px-6 rounded-xl font-bold text-sm transition-all duration-300 cursor-pointer flex items-center justify-center gap-2 ${
                   isSoldOut || (successMsg && !showOTP)
-                    ? "bg-gray-250 text-gray-400 cursor-not-allowed shadow-none"
-                    : "bg-gray-900 hover:bg-black text-white hover:shadow-lg hover:-translate-y-0.5"
+                    ? "bg-slate-850 text-slate-500 cursor-not-allowed shadow-none border border-slate-800"
+                    : "bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-400 hover:to-teal-500 text-white shadow-lg shadow-emerald-500/10 hover:shadow-emerald-500/20 hover:-translate-y-0.5"
                 }`}
               >
-                {bookingLoading
-                  ? "Processing..."
-                  : showOTP
-                    ? "Verify OTP & Confirm"
-                    : successMsg && !showOTP
-                      ? "Request Sent"
-                      : isSoldOut
-                        ? "Sold Out"
-                        : "Confirm Registration"}
+                {bookingLoading ? (
+                  <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                ) : showOTP ? (
+                  "Verify OTP & Confirm"
+                ) : successMsg && !showOTP ? (
+                  "Request Sent"
+                ) : isSoldOut ? (
+                  "Sold Out"
+                ) : (
+                  "Confirm Registration"
+                )}
               </button>
 
               {/* Add to Google Calendar button (only if not sold out and not pending verification) */}
@@ -268,19 +287,19 @@ const EventDetail = () => {
                   )}&location=${encodeURIComponent(event.location)}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-full text-center mt-3 text-xs font-bold text-gray-500 hover:text-black hover:bg-gray-100 border border-gray-200/80 bg-white py-2.5 rounded-xl transition duration-200 focus:outline-none"
+                  className="w-full text-center mt-3 text-xs font-bold text-slate-400 hover:text-white hover:bg-slate-900 border border-slate-800 bg-slate-900/40 py-2.5 rounded-xl transition duration-200 focus:outline-none"
                 >
                   📅 Add to Google Calendar
                 </a>
               )}
 
               {error && (
-                <p className="text-red-600 mt-4 text-center text-xs font-bold bg-red-50 p-2.5 rounded-lg border border-red-100">
+                <p className="text-rose-400 mt-4 text-center text-xs font-bold bg-rose-500/10 p-2.5 rounded-lg border border-rose-500/20 animate-shake">
                   {error}
                 </p>
               )}
               {successMsg && (
-                <p className="text-emerald-700 mt-4 text-center text-xs font-bold bg-emerald-50 p-2.5 rounded-lg border border-emerald-100">
+                <p className="text-emerald-400 mt-4 text-center text-xs font-bold bg-emerald-500/10 p-2.5 rounded-lg border border-emerald-500/20">
                   {successMsg}
                 </p>
               )}
