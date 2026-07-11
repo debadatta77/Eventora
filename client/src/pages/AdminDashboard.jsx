@@ -417,7 +417,7 @@ const AdminDashboard = () => {
                           Date:
                         </span>
                         <span className="text-slate-700 dark:text-slate-300 font-medium">
-                          {new Date(booking.bookedAt).toLocaleString()}
+                          {new Date(booking.createdAt).toLocaleString()}
                         </span>
                       </p>
                       {booking.eventId && (
