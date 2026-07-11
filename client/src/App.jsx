@@ -9,7 +9,7 @@ import { Routes, Route } from "react-router-dom";
 
 function App() {
   return (
-    <div className="bg-gray-50 min-h-screen">
+    <div className="bg-slate-950 min-h-screen text-slate-100">
       <Navbar />
       <main className="container mx-auto px-4 py-8">
         <Routes>
