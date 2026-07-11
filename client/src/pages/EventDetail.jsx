@@ -74,21 +74,21 @@ const EventDetail = () => {
 
   if (loading)
     return (
-      <div className="min-h-screen bg-slate-950 flex items-center justify-center">
+      <div className="min-h-screen bg-slate-50 dark:bg-slate-950 flex items-center justify-center transition-colors duration-300">
         <div className="flex flex-col items-center gap-4">
-          <div className="w-10 h-10 border-4 border-emerald-500/20 border-t-emerald-400 rounded-full animate-spin" />
-          <span className="text-slate-400 text-sm font-semibold">Loading details...</span>
+          <div className="w-10 h-10 border-4 border-emerald-500/20 border-t-emerald-500 dark:border-t-emerald-400 rounded-full animate-spin" />
+          <span className="text-slate-500 dark:text-slate-400 text-sm font-semibold">Loading details...</span>
         </div>
       </div>
     );
   if (error && !event)
     return (
-      <div className="min-h-screen bg-slate-950 flex items-center justify-center p-4">
-        <div className="bg-slate-900/60 border border-slate-800/80 rounded-2xl p-8 max-w-md text-center shadow-xl">
-          <p className="text-rose-400 text-lg font-bold mb-4">{error || "Event not found"}</p>
+      <div className="min-h-screen bg-slate-50 dark:bg-slate-950 flex items-center justify-center p-4 transition-colors duration-300">
+        <div className="bg-white/80 dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800/80 rounded-2xl p-8 max-w-md text-center shadow-xl">
+          <p className="text-rose-500 dark:text-rose-400 text-lg font-bold mb-4">{error || "Event not found"}</p>
           <button
             onClick={() => navigate("/")}
-            className="bg-slate-950 border border-slate-800 hover:border-emerald-500/30 text-white font-bold py-2 px-6 rounded-xl text-xs transition duration-200 cursor-pointer"
+            className="bg-slate-50 dark:bg-slate-955 border border-slate-200 dark:border-slate-800 hover:border-emerald-500/30 text-slate-800 dark:text-white font-bold py-2 px-6 rounded-xl text-xs transition duration-200 cursor-pointer"
           >
             Back to Events
           </button>
@@ -106,23 +106,23 @@ const EventDetail = () => {
       {/* Back Button */}
       <button
         onClick={() => navigate("/")}
-        className="flex items-center gap-2 text-slate-400 hover:text-white font-semibold mb-6 transition duration-200 group focus:outline-none cursor-pointer text-sm"
+        className="flex items-center gap-2 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white font-semibold mb-6 transition duration-200 group focus:outline-none cursor-pointer text-sm"
       >
         <FaArrowLeft className="group-hover:-translate-x-1 transition-transform text-xs" /> Back to Events
       </button>
 
-      <div className="bg-slate-900/60 backdrop-blur-xl rounded-3xl shadow-2xl overflow-hidden border border-slate-800/80">
+      <div className="bg-white/80 dark:bg-slate-900/60 backdrop-blur-xl rounded-3xl shadow-xl dark:shadow-2xl overflow-hidden border border-slate-200/80 dark:border-slate-800/80 transition-colors duration-300">
         {event.imageUrl || event.image ? (
-          <div className="h-96 relative overflow-hidden group border-b border-slate-800/85">
+          <div className="h-96 relative overflow-hidden group border-b border-slate-100 dark:border-slate-800/85">
             <img
               src={event.imageUrl || event.image}
               alt={event.title}
               className="w-full h-full object-cover group-hover:scale-[1.01] transition duration-700"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-transparent to-transparent"></div>
+            <div className="absolute inset-0 bg-gradient-to-t from-white dark:from-slate-900 via-transparent to-transparent"></div>
           </div>
         ) : (
-          <div className="w-full h-64 bg-slate-950 flex items-center justify-center text-slate-600 border-b border-slate-800/85 text-6xl font-black uppercase tracking-widest select-none">
+          <div className="w-full h-64 bg-slate-100 dark:bg-slate-950 flex items-center justify-center text-slate-400 dark:text-slate-650 border-b border-slate-200 dark:border-slate-800/85 text-6xl font-black uppercase tracking-widest select-none">
             {event.category}
           </div>
         )}
@@ -132,40 +132,40 @@ const EventDetail = () => {
             
             {/* Left Column: Title & Description */}
             <div className="flex-grow max-w-xl">
-              <div className="inline-block bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 text-xs font-bold px-3.5 py-1 rounded-full uppercase tracking-wide mb-4">
+              <div className="inline-block bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20 text-xs font-bold px-3.5 py-1 rounded-full uppercase tracking-wide mb-4">
                 {event.category}
               </div>
-              <h1 className="text-4xl md:text-5xl font-black text-white mb-6 leading-tight">
+              <h1 className="text-4xl md:text-5xl font-black text-slate-900 dark:text-white mb-6 leading-tight">
                 {event.title}
               </h1>
-              <div className="border-t border-slate-800 pt-6">
-                <h3 className="text-lg font-bold text-white mb-3">About this Event</h3>
-                <p className="text-slate-300 text-md leading-relaxed whitespace-pre-line font-medium">
+              <div className="border-t border-slate-100 dark:border-slate-800 pt-6">
+                <h3 className="text-lg font-bold text-slate-800 dark:text-white mb-3">About this Event</h3>
+                <p className="text-slate-600 dark:text-slate-300 text-md leading-relaxed whitespace-pre-line font-medium">
                   {event.description}
                 </p>
               </div>
             </div>
 
             {/* Right Column: Booking Details Card */}
-            <div className="bg-slate-950/70 p-6 rounded-2xl border border-slate-850 min-w-[320px] w-full lg:w-auto shrink-0 shadow-xl flex flex-col justify-between">
+            <div className="bg-slate-50/70 dark:bg-slate-955/70 p-6 rounded-2xl border border-slate-150 dark:border-slate-850 min-w-[320px] w-full lg:w-auto shrink-0 shadow-md dark:shadow-xl flex flex-col justify-between transition-colors duration-300">
               <div>
-                <h3 className="text-lg font-bold text-white mb-6 pb-3 border-b border-slate-800">
+                <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-6 pb-3 border-b border-slate-200 dark:border-slate-800">
                   Booking Details
                 </h3>
 
                 <div className="space-y-5 mb-8">
                   {/* Ticket Price */}
                   <div className="flex items-center gap-4">
-                    <div className="w-10 h-10 rounded-full bg-slate-900 border border-slate-800 flex items-center justify-center text-emerald-400 shrink-0">
+                    <div className="w-10 h-10 rounded-full bg-white dark:bg-slate-900 border border-slate-150 dark:border-slate-800 flex items-center justify-center text-emerald-500 dark:text-emerald-400 shrink-0">
                       <FaMoneyBillWave className="text-sm" />
                     </div>
                     <div>
-                      <p className="text-[10px] font-bold text-slate-500 uppercase tracking-wider">
+                      <p className="text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider">
                         Ticket Price
                       </p>
-                      <p className="font-extrabold text-white text-lg mt-0.5">
+                      <p className="font-extrabold text-slate-900 dark:text-white text-lg mt-0.5">
                         {event.ticketPrice === 0 ? (
-                          <span className="text-emerald-400 font-bold">FREE ENTRY</span>
+                          <span className="text-emerald-600 dark:text-emerald-400 font-bold">FREE ENTRY</span>
                         ) : (
                           `₹${event.ticketPrice}`
                         )}
@@ -175,32 +175,32 @@ const EventDetail = () => {
 
                   {/* Availability */}
                   <div className="flex items-center gap-4">
-                    <div className="w-10 h-10 rounded-full bg-slate-900 border border-slate-800 flex items-center justify-center text-emerald-400 shrink-0">
+                    <div className="w-10 h-10 rounded-full bg-white dark:bg-slate-900 border border-slate-150 dark:border-slate-800 flex items-center justify-center text-emerald-500 dark:text-emerald-400 shrink-0">
                       <FaChair className="text-sm" />
                     </div>
                     <div className="flex-grow">
-                      <p className="text-[10px] font-bold text-slate-500 uppercase tracking-wider">
+                      <p className="text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider">
                         Availability
                       </p>
-                      <p className="font-extrabold text-white mt-0.5">
-                        <span className={event.availableSeats < 10 ? "text-orange-400 animate-pulse" : "text-white"}>
+                      <p className="font-extrabold text-slate-900 dark:text-white mt-0.5">
+                        <span className={event.availableSeats < 10 ? "text-orange-500 dark:text-orange-400 animate-pulse" : "text-slate-900 dark:text-white"}>
                           {event.availableSeats}
                         </span>{" "}
-                        / <span className="text-slate-400 font-medium">{event.totalSeats} seats</span>
+                        / <span className="text-slate-500 dark:text-slate-400 font-medium">{event.totalSeats} seats</span>
                       </p>
                     </div>
                   </div>
 
                   {/* Date */}
                   <div className="flex items-center gap-4">
-                    <div className="w-10 h-10 rounded-full bg-slate-900 border border-slate-800 flex items-center justify-center text-emerald-400 shrink-0">
+                    <div className="w-10 h-10 rounded-full bg-white dark:bg-slate-900 border border-slate-150 dark:border-slate-800 flex items-center justify-center text-emerald-500 dark:text-emerald-400 shrink-0">
                       <FaCalendarAlt className="text-sm" />
                     </div>
                     <div>
-                      <p className="text-[10px] font-bold text-slate-500 uppercase tracking-wider">
+                      <p className="text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider">
                         Date & Time
                       </p>
-                      <p className="font-extrabold text-white mt-0.5">
+                      <p className="font-extrabold text-slate-905 dark:text-white mt-0.5">
                         {new Date(event.date).toLocaleDateString(undefined, {
                           weekday: "short",
                           month: "short",
@@ -213,18 +213,18 @@ const EventDetail = () => {
 
                   {/* Location */}
                   <div className="flex items-center gap-4">
-                    <div className="w-10 h-10 rounded-full bg-slate-900 border border-slate-800 flex items-center justify-center text-emerald-400 shrink-0">
+                    <div className="w-10 h-10 rounded-full bg-white dark:bg-slate-900 border border-slate-150 dark:border-slate-800 flex items-center justify-center text-emerald-500 dark:text-emerald-400 shrink-0">
                       <FaMapMarkerAlt className="text-sm" />
                     </div>
                     <div className="flex-grow min-w-0">
-                      <p className="text-[10px] font-bold text-slate-500 uppercase tracking-wider">
+                      <p className="text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider">
                         Location
                       </p>
                       <a
                         href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(event.location)}`}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="font-extrabold text-emerald-400 hover:text-emerald-300 hover:underline block mt-0.5 truncate max-w-[200px]"
+                        className="font-extrabold text-emerald-600 dark:text-emerald-400 hover:text-emerald-500 dark:hover:text-emerald-300 hover:underline block mt-0.5 truncate max-w-[200px]"
                         title="Click to view on Google Maps"
                       >
                         {event.location} &rarr;
@@ -236,14 +236,14 @@ const EventDetail = () => {
 
               {showOTP && (
                 <div className="mb-5 animate-slideIn">
-                  <label className="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">
+                  <label className="block text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-2">
                     Enter OTP Sent to Email
                   </label>
                   <input
                     type="text"
                     required
                     placeholder="6-digit code"
-                    className="w-full px-4 py-3 rounded-xl border border-slate-800 bg-slate-950 text-white placeholder-slate-600 focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500/20 outline-none transition shadow-sm font-black tracking-widest text-center text-lg focus:bg-slate-950"
+                    className="w-full px-4 py-3 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950 text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-605 focus:border-emerald-505 focus:ring-1 focus:ring-emerald-500/20 outline-none transition shadow-sm font-black tracking-widest text-center text-lg focus:bg-white dark:focus:bg-slate-950"
                     value={otp}
                     onChange={(e) => setOtp(e.target.value)}
                     maxLength="6"
@@ -256,7 +256,7 @@ const EventDetail = () => {
                 disabled={isSoldOut || bookingLoading || (showOTP && !otp)}
                 className={`w-full py-4 px-6 rounded-xl font-bold text-sm transition-all duration-300 cursor-pointer flex items-center justify-center gap-2 ${
                   isSoldOut || (successMsg && !showOTP)
-                    ? "bg-slate-850 text-slate-500 cursor-not-allowed shadow-none border border-slate-800"
+                    ? "bg-slate-100 dark:bg-slate-850 text-slate-400 dark:text-slate-500 border border-slate-200 dark:border-slate-800 cursor-not-allowed shadow-none"
                     : "bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-400 hover:to-teal-500 text-white shadow-lg shadow-emerald-500/10 hover:shadow-emerald-500/20 hover:-translate-y-0.5"
                 }`}
               >
@@ -287,19 +287,19 @@ const EventDetail = () => {
                   )}&location=${encodeURIComponent(event.location)}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-full text-center mt-3 text-xs font-bold text-slate-400 hover:text-white hover:bg-slate-900 border border-slate-800 bg-slate-900/40 py-2.5 rounded-xl transition duration-200 focus:outline-none"
+                  className="w-full text-center mt-3 text-xs font-bold text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-900 border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/40 py-2.5 rounded-xl transition duration-200 focus:outline-none"
                 >
                   📅 Add to Google Calendar
                 </a>
               )}
 
               {error && (
-                <p className="text-rose-400 mt-4 text-center text-xs font-bold bg-rose-500/10 p-2.5 rounded-lg border border-rose-500/20 animate-shake">
+                <p className="text-rose-600 dark:text-rose-400 mt-4 text-center text-xs font-bold bg-rose-500/10 p-2.5 rounded-lg border border-rose-500/20 animate-shake">
                   {error}
                 </p>
               )}
               {successMsg && (
-                <p className="text-emerald-400 mt-4 text-center text-xs font-bold bg-emerald-500/10 p-2.5 rounded-lg border border-emerald-500/20">
+                <p className="text-emerald-600 dark:text-emerald-400 mt-4 text-center text-xs font-bold bg-emerald-500/10 p-2.5 rounded-lg border border-emerald-500/20">
                   {successMsg}
                 </p>
               )}

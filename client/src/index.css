@@ -1,12 +1,12 @@
 @import "tailwindcss";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
 body {
     margin: 0;
     font-family: 'Outfit', 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    background-color: #030712;
-    color: #f3f4f6;
     overflow-x: hidden;
 }
 
@@ -16,11 +16,17 @@ body {
   height: 6px;
 }
 ::-webkit-scrollbar-track {
+  background: #f1f5f9;
+}
+.dark ::-webkit-scrollbar-track, .dark::-webkit-scrollbar-track {
   background: #030712;
 }
 ::-webkit-scrollbar-thumb {
-  background: #1e293b;
+  background: #cbd5e1;
   border-radius: 10px;
+}
+.dark ::-webkit-scrollbar-thumb, .dark::-webkit-scrollbar-thumb {
+  background: #1e293b;
 }
 ::-webkit-scrollbar-thumb:hover {
   background: #10b981;
