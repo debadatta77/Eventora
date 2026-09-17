@@ -1,0 +1,794 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Eventora — Project & Interview Documentation</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@500;600;700;800;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    @page {
+      size: A4;
+      margin: 14mm 14mm 16mm 14mm;
+      @bottom-right {
+        content: counter(page);
+        font-family: 'Inter', sans-serif;
+        font-size: 9pt;
+        color: #64748b;
+      }
+    }
+
+    * {
+      box-sizing: border-box;
+      -webkit-print-color-adjust: exact !important;
+      print-color-adjust: exact !important;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      color: #0f172a;
+      background-color: #ffffff;
+      line-height: 1.5;
+      font-size: 9.5pt;
+      margin: 0;
+      padding: 0;
+    }
+
+    h1, h2, h3, h4 {
+      font-family: 'Outfit', sans-serif;
+      color: #0f172a;
+      margin-top: 0;
+      letter-spacing: -0.02em;
+    }
+
+    /* Cover / Header Banner */
+    .header-banner {
+      background: linear-gradient(135deg, #064e3b 0%, #042f2e 50%, #0f172a 100%);
+      color: white;
+      padding: 24px 28px;
+      border-radius: 12px;
+      margin-bottom: 22px;
+      border: 1px solid #1e293b;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.08);
+    }
+
+    .badge-pill {
+      display: inline-block;
+      background: rgba(16, 185, 129, 0.2);
+      color: #34d399;
+      border: 1px solid rgba(52, 211, 153, 0.35);
+      padding: 3px 10px;
+      border-radius: 9999px;
+      font-size: 7.5pt;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 8px;
+    }
+
+    .header-banner h1 {
+      color: #ffffff;
+      font-size: 24pt;
+      font-weight: 900;
+      margin: 4px 0 8px 0;
+      line-height: 1.15;
+    }
+
+    .header-banner p {
+      color: #cbd5e1;
+      font-size: 10pt;
+      margin: 0;
+      max-width: 650px;
+      line-height: 1.45;
+    }
+
+    .meta-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      margin-top: 16px;
+      padding-top: 14px;
+      border-top: 1px solid rgba(255, 255, 255, 0.15);
+      font-size: 8pt;
+    }
+
+    .meta-item strong {
+      display: block;
+      color: #94a3b8;
+      text-transform: uppercase;
+      font-size: 7pt;
+      letter-spacing: 0.05em;
+      margin-bottom: 2px;
+    }
+
+    .meta-item span {
+      color: #f1f5f9;
+      font-weight: 600;
+    }
+
+    /* Section Headings */
+    .section-title {
+      font-size: 13pt;
+      font-weight: 800;
+      border-bottom: 2px solid #e2e8f0;
+      padding-bottom: 6px;
+      margin: 20px 0 12px 0;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: #0f172a;
+      page-break-after: avoid;
+    }
+
+    .section-title .icon {
+      color: #059669;
+    }
+
+    /* Cards and Grids */
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-bottom: 12px;
+      page-break-inside: avoid;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 10px;
+      margin-bottom: 12px;
+      page-break-inside: avoid;
+    }
+
+    .card {
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      padding: 12px 14px;
+      font-size: 8.5pt;
+      page-break-inside: avoid;
+    }
+
+    .card-title {
+      font-size: 9.5pt;
+      font-weight: 700;
+      color: #0f172a;
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    /* Callout Boxes */
+    .callout {
+      border-left: 4px solid #10b981;
+      background: #f0fdf4;
+      padding: 10px 14px;
+      border-radius: 0 8px 8px 0;
+      margin: 10px 0;
+      font-size: 8.5pt;
+      border-top: 1px solid #dcfce7;
+      border-right: 1px solid #dcfce7;
+      border-bottom: 1px solid #dcfce7;
+      page-break-inside: avoid;
+    }
+
+    .callout-warning {
+      border-left-color: #f59e0b;
+      background: #fffbeb;
+      border-top: 1px solid #fef3c7;
+      border-right: 1px solid #fef3c7;
+      border-bottom: 1px solid #fef3c7;
+    }
+
+    .callout-title {
+      font-weight: 700;
+      font-size: 9pt;
+      color: #065f46;
+      margin-bottom: 3px;
+    }
+
+    .callout-warning .callout-title {
+      color: #92400e;
+    }
+
+    /* Tables */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 8pt;
+      margin: 10px 0 16px 0;
+    }
+
+    th {
+      background: #f1f5f9;
+      color: #334155;
+      font-weight: 700;
+      text-align: left;
+      padding: 7px 10px;
+      border: 1px solid #cbd5e1;
+      text-transform: uppercase;
+      font-size: 7pt;
+      letter-spacing: 0.04em;
+    }
+
+    td {
+      padding: 6.5px 10px;
+      border: 1px solid #e2e8f0;
+      vertical-align: top;
+    }
+
+    tr:nth-child(even) td {
+      background: #f8fafc;
+    }
+
+    /* Code & Highlights */
+    code {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 7.8pt;
+      background: #e2e8f0;
+      color: #0f172a;
+      padding: 2px 5px;
+      border-radius: 4px;
+      font-weight: 600;
+    }
+
+    pre {
+      background: #0f172a;
+      color: #f8fafc;
+      padding: 10px 14px;
+      border-radius: 8px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 7.6pt;
+      line-height: 1.45;
+      overflow: hidden;
+      margin: 8px 0;
+      border: 1px solid #1e293b;
+    }
+
+    /* Flow Step Boxes */
+    .flow-step {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      margin-bottom: 10px;
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      padding: 10px 12px;
+      border-radius: 8px;
+      page-break-inside: avoid;
+    }
+
+    .step-number {
+      background: #10b981;
+      color: white;
+      font-weight: 800;
+      font-size: 9pt;
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      shrink: 0;
+    }
+
+    .step-content {
+      flex: 1;
+    }
+
+    .step-title {
+      font-weight: 700;
+      font-size: 9pt;
+      color: #0f172a;
+      margin-bottom: 3px;
+    }
+
+    .step-desc {
+      font-size: 8.2pt;
+      color: #475569;
+      margin: 0;
+    }
+
+    /* Q&A Item */
+    .qa-box {
+      background: #ffffff;
+      border: 1px solid #cbd5e1;
+      border-radius: 8px;
+      padding: 12px 14px;
+      margin-bottom: 12px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+      page-break-inside: avoid;
+    }
+
+    .qa-question {
+      font-family: 'Outfit', sans-serif;
+      font-weight: 800;
+      font-size: 10pt;
+      color: #047857;
+      margin-bottom: 6px;
+      display: flex;
+      align-items: baseline;
+      gap: 6px;
+    }
+
+    .qa-answer {
+      font-size: 8.5pt;
+      color: #334155;
+      line-height: 1.5;
+    }
+
+    .page-break {
+      page-break-before: always;
+    }
+
+    .tag {
+      display: inline-block;
+      font-size: 6.8pt;
+      font-weight: 700;
+      padding: 2px 6px;
+      border-radius: 4px;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+    .tag-emerald { background: #dcfce7; color: #166534; }
+    .tag-blue { background: #dbeafe; color: #1e40af; }
+    .tag-amber { background: #fef3c7; color: #92400e; }
+    .tag-rose { background: #ffe4e6; color: #9f1239; }
+  </style>
+</head>
+<body>
+
+  <!-- ==================== HEADER BANNER ==================== -->
+  <div class="header-banner">
+    <div class="badge-pill">MERN Stack Architecture & Interview Guide</div>
+    <h1>🎟️ Eventora — Technical Documentation</h1>
+    <p>A high-performance event discovery and booking platform engineered with role-based access control, two-factor OTP verification, resilient transactional mail pipelines, and a dynamic glassmorphic UI.</p>
+    
+    <div class="meta-grid">
+      <div class="meta-item">
+        <strong>Architecture</strong>
+        <span>Full-Stack MERN</span>
+      </div>
+      <div class="meta-item">
+        <strong>Auth Model</strong>
+        <span>JWT + 2FA OTP + RBAC</span>
+      </div>
+      <div class="meta-item">
+        <strong>Styling</strong>
+        <span>Tailwind CSS v4 + Dark/Light</span>
+      </div>
+      <div class="meta-item">
+        <strong>Target Role</strong>
+        <span>Full-Stack / MERN Engineer</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== SECTION 1 ==================== -->
+  <div class="section-title">
+    <span class="icon">01.</span> Tech Stack & Component Architecture
+  </div>
+
+  <div class="grid-3">
+    <div class="card">
+      <div class="card-title">🌐 Frontend Core</div>
+      <ul style="margin: 0; padding-left: 14px; color: #475569; font-size: 8pt;">
+        <li><strong>React 19 & Vite 8:</strong> Instant HMR and high-efficiency tree-shaking.</li>
+        <li><strong>Tailwind CSS v4:</strong> Dark mode via <code>@custom-variant</code>.</li>
+        <li><strong>React Router v7:</strong> Declarative client-side routing.</li>
+        <li><strong>React Icons:</strong> Lightweight icon library.</li>
+      </ul>
+    </div>
+    <div class="card">
+      <div class="card-title">⚙️ Backend Services</div>
+      <ul style="margin: 0; padding-left: 14px; color: #475569; font-size: 8pt;">
+        <li><strong>Node.js & Express:</strong> RESTful API server.</li>
+        <li><strong>Bcrypt.js:</strong> One-way password hashing (10 rounds).</li>
+        <li><strong>JSON Web Tokens:</strong> Stateless bearer authentication.</li>
+        <li><strong>CORS Whitelist:</strong> Domain-restricted credential policies.</li>
+      </ul>
+    </div>
+    <div class="card">
+      <div class="card-title">🗄️ Database & Mail</div>
+      <ul style="margin: 0; padding-left: 14px; color: #475569; font-size: 8pt;">
+        <li><strong>MongoDB Atlas:</strong> Managed document datastore.</li>
+        <li><strong>Mongoose ODM:</strong> Schema validation & population.</li>
+        <li><strong>Smart Dual-Engine Mailer:</strong> Nodemailer + HTTPS API failover (Brevo & Resend).</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="card" style="margin-bottom: 16px;">
+    <div class="card-title">📁 Project Structure Overview</div>
+    <table style="margin: 4px 0 0 0;">
+      <thead>
+        <tr>
+          <th>Directory</th>
+          <th>Key Files</th>
+          <th>Responsibility</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><code>client/src/context/</code></td>
+          <td><code>AuthContext.jsx</code>, <code>ThemeContext.jsx</code>, <code>ToastContext.jsx</code></td>
+          <td>Modular global state handling user sessions, dark/light theme persistence, and notifications.</td>
+        </tr>
+        <tr>
+          <td><code>client/src/pages/</code></td>
+          <td><code>Home</code>, <code>EventDetail</code>, <code>UserDashboard</code>, <code>AdminDashboard</code>, <code>Login</code></td>
+          <td>Responsive views: debounced search, event passes, admin counters, and verification modals.</td>
+        </tr>
+        <tr>
+          <td><code>server/controllers/</code></td>
+          <td><code>authController.js</code>, <code>eventController.js</code>, <code>bookingController.js</code></td>
+          <td>Core business logic: seat calculations, OTP generation, password hashing, and booking approvals.</td>
+        </tr>
+        <tr>
+          <td><code>server/middleware/</code></td>
+          <td><code>auth.js</code> (<code>protect</code>, <code>admin</code>)</td>
+          <td>Route guards: Bearer token validation and Role-Based Access Control (RBAC).</td>
+        </tr>
+        <tr>
+          <td><code>server/utils/</code></td>
+          <td><code>email.js</code>, <code>generateOTP.js</code></td>
+          <td>Dual-channel transactional email engine with HTTPS port 443 failover.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ==================== SECTION 2 ==================== -->
+  <div class="section-title">
+    <span class="icon">02.</span> Core Architectural Lifecycles
+  </div>
+
+  <div class="flow-step">
+    <div class="step-number">A</div>
+    <div class="step-content">
+      <div class="step-title">Authentication & 2FA Verification Flow</div>
+      <p class="step-desc">
+        <strong>1. Registration:</strong> Client sends <code>name, email, password</code>. Server hashes password with <code>bcrypt</code>, inserts user with <code>isVerified: false</code>, creates a 6-digit OTP in the <code>OTP</code> collection (5-minute TTL), and dispatches an verification email.<br>
+        <strong>2. OTP Verification:</strong> Client submits OTP to <code>/api/auth/verify-otp</code>. Server validates the document, flags <code>isVerified: true</code>, purges the OTP record, and responds with a signed JWT.<br>
+        <strong>3. Login Gate:</strong> If an unverified user logs in, the API returns a <code>needsVerification: true</code> flag, automatically triggers a fresh OTP dispatch, and shifts the UI into OTP mode without revealing internal errors.
+      </p>
+    </div>
+  </div>
+
+  <div class="flow-step">
+    <div class="step-number">B</div>
+    <div class="step-content">
+      <div class="step-title">Two-Factor Booking & Ticket Approval Flow</div>
+      <p class="step-desc">
+        <strong>1. Intent & OTP Dispatch:</strong> Logged-in user triggers booking. Server deletes stale OTPs, creates a new <code>event_booking</code> OTP, and emails it.<br>
+        <strong>2. Reservation Submission:</strong> User submits OTP + <code>eventId</code>. Server checks <code>availableSeats &gt; 0</code> and ensures no active booking exists for this user-event pair. Creates booking with <code>status: "pending"</code>.<br>
+        <strong>3. Admin Confirmation:</strong> Admin reviews request via <code>PUT /api/bookings/:id/confirm</code>, flags <code>status: "confirmed"</code>, sets <code>paymentStatus: "paid"</code>, decrements <code>availableSeats</code>, and asynchronously triggers a confirmation email.<br>
+        <strong>4. Ticket Generation:</strong> User Dashboard renders a visual Event Pass ticket with side tear notches, ticket ID, holder details, and printable QR code via <code>window.print()</code>.
+      </p>
+    </div>
+  </div>
+
+  <!-- ==================== PAGE BREAK ==================== -->
+  <div class="page-break"></div>
+
+  <!-- ==================== SECTION 3 ==================== -->
+  <div class="section-title">
+    <span class="icon">03.</span> Key Engineering Challenges Solved (Interview Highlights)
+  </div>
+
+  <div class="callout">
+    <div class="callout-title">1. Cloud Host SMTP Outbound Port Blocking Bypass (Port 443 Fallback)</div>
+    <strong>Challenge:</strong> Cloud providers like Render block standard outbound SMTP ports (<code>25</code>, <code>465</code>, <code>587</code>) on free instances to prevent email abuse, causing standard Nodemailer sockets to hang and timeout.<br>
+    <strong>Engineered Solution:</strong> Implemented a smart dual-engine mailer in <code>server/utils/email.js</code>. The mailer inspects environment variables:
+    <ul style="margin: 4px 0 6px 0; padding-left: 18px;">
+      <li>If <code>EMAIL_PASS</code> starts with <code>re_</code> (Resend) or <code>xkeysib-</code> / <code>xsmtpsib-</code> (Brevo), it circumvents raw sockets and calls their <strong>HTTPS REST APIs over Port 443</strong> via native <code>fetch</code>.</li>
+      <li>If using standard SMTP credentials (e.g., local development with Gmail), it gracefully falls back to standard Nodemailer transport.</li>
+    </ul>
+  </div>
+
+  <div class="callout">
+    <div class="callout-title">2. CSS Containing Block Trap Solved via React Portals</div>
+    <strong>Challenge:</strong> The user Profile popup inside the navbar was clipped and constrained within the navbar's boundary rather than covering the whole viewport.<br>
+    <strong>Root Cause:</strong> Under W3C CSS specifications, applying <code>backdrop-filter: blur(...)</code> on a parent element creates a new containing block for all its <code>fixed</code> descendants, breaking traditional modal positioning.<br>
+    <strong>Engineered Solution:</strong> Used <code>ReactDOM.createPortal(modalJSX, document.body)</code> in <code>ProfileModal.jsx</code>. This mounts the modal outside the navbar's DOM tree directly to <code>&lt;body&gt;</code>, allowing full-screen backdrops and reliable outside-click dismissal.
+  </div>
+
+  <div class="callout">
+    <div class="callout-title">3. DNS SRV Lookup Timeouts for MongoDB Atlas</div>
+    <strong>Challenge:</strong> Local ISP and cloud DNS servers occasionally fail when resolving <code>mongodb+srv://</code> connection strings, resulting in <code>querySrv ENOTFOUND</code> errors.<br>
+    <strong>Engineered Solution:</strong> Explicitly registered fallback DNS resolvers in <code>server/index.js</code> prior to connection:
+    <pre>const dns = require("dns");
+dns.setServers(["1.1.1.1", "1.0.0.1"]); // Cloudflare Public DNS</pre>
+  </div>
+
+  <div class="callout callout-warning">
+    <div class="callout-title">4. Concurrency & Race Conditions in Seat Reservations</div>
+    <strong>Interview Discussion Point:</strong> How does the system handle concurrent bookings when only 1 seat remains?<br>
+    <strong>Implementation & Scalable Evolution:</strong>
+    <ul style="margin: 4px 0 0 0; padding-left: 18px;">
+      <li><strong>Current:</strong> Two-phase validation — verified at OTP submission and again during Admin approval.</li>
+      <li><strong>High-Scale Solution:</strong> Use MongoDB atomic operator with conditional query:
+        <pre>await Event.findOneAndUpdate(
+  { _id: eventId, availableSeats: { $gt: 0 } },
+  { $inc: { availableSeats: -1 } }
+);</pre>
+        This guarantees database-level atomicity without needing distributed locks.
+      </li>
+    </ul>
+  </div>
+
+  <!-- ==================== SECTION 4 ==================== -->
+  <div class="section-title">
+    <span class="icon">04.</span> Database Schema Architecture
+  </div>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Collection</th>
+        <th>Field</th>
+        <th>Type</th>
+        <th>Constraints & Notes</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td rowspan="5"><strong>User</strong></td>
+        <td><code>name</code></td>
+        <td>String</td>
+        <td>Required, trimmed</td>
+      </tr>
+      <tr>
+        <td><code>email</code></td>
+        <td>String</td>
+        <td>Required, unique index, lowercase</td>
+      </tr>
+      <tr>
+        <td><code>password</code></td>
+        <td>String</td>
+        <td>Hashed with bcrypt (10 rounds), excluded on query select</td>
+      </tr>
+      <tr>
+        <td><code>role</code></td>
+        <td>String</td>
+        <td>Enum: <code>["user", "admin"]</code>, default: <code>"user"</code></td>
+      </tr>
+      <tr>
+        <td><code>isVerified</code></td>
+        <td>Boolean</td>
+        <td>Default: <code>false</code>. Toggled to <code>true</code> post-OTP verification</td>
+      </tr>
+      <tr>
+        <td rowspan="5"><strong>Event</strong></td>
+        <td><code>title</code>, <code>desc</code>, <code>loc</code></td>
+        <td>String</td>
+        <td>Required descriptive metadata</td>
+      </tr>
+      <tr>
+        <td><code>category</code></td>
+        <td>String</td>
+        <td>Enum filterable: Tech, Music, Business, Art, Food, etc.</td>
+      </tr>
+      <tr>
+        <td><code>date</code></td>
+        <td>Date</td>
+        <td>Required event timestamp</td>
+      </tr>
+      <tr>
+        <td><code>totalSeats</code>, <code>availSeats</code></td>
+        <td>Number</td>
+        <td>Available seats decremented upon booking confirmation</td>
+      </tr>
+      <tr>
+        <td><code>ticketPrice</code></td>
+        <td>Number</td>
+        <td><code>0</code> signifies Free Entry pass</td>
+      </tr>
+      <tr>
+        <td rowspan="4"><strong>Booking</strong></td>
+        <td><code>userId</code>, <code>eventId</code></td>
+        <td>ObjectId</td>
+        <td>Refs to <code>User</code> and <code>Event</code> models</td>
+      </tr>
+      <tr>
+        <td><code>status</code></td>
+        <td>String</td>
+        <td>Enum: <code>["pending", "confirmed", "cancelled"]</code></td>
+      </tr>
+      <tr>
+        <td><code>paymentStatus</code></td>
+        <td>String</td>
+        <td>Enum: <code>["nonpaid", "paid"]</code></td>
+      </tr>
+      <tr>
+        <td><code>timestamps</code></td>
+        <td>Date</td>
+        <td>Auto-generated <code>createdAt</code> and <code>updatedAt</code></td>
+      </tr>
+      <tr>
+        <td rowspan="3"><strong>OTP</strong></td>
+        <td><code>email</code>, <code>otp</code></td>
+        <td>String</td>
+        <td>6-digit numeric string</td>
+      </tr>
+      <tr>
+        <td><code>action</code></td>
+        <td>String</td>
+        <td>Enum: <code>["register", "event_booking"]</code></td>
+      </tr>
+      <tr>
+        <td><code>expiresAt</code></td>
+        <td>Date</td>
+        <td>TTL expiration timestamp (5 minutes)</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- ==================== PAGE BREAK ==================== -->
+  <div class="page-break"></div>
+
+  <!-- ==================== SECTION 5 ==================== -->
+  <div class="section-title">
+    <span class="icon">05.</span> REST API Reference Matrix
+  </div>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Method</th>
+        <th>Endpoint</th>
+        <th>Access</th>
+        <th>Payload / Params</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="tag tag-emerald">POST</span></td>
+        <td><code>/api/auth/register</code></td>
+        <td>Public</td>
+        <td><code>{ name, email, password }</code></td>
+        <td>Registers user & sends 2FA registration OTP</td>
+      </tr>
+      <tr>
+        <td><span class="tag tag-emerald">POST</span></td>
+        <td><code>/api/auth/login</code></td>
+        <td>Public</td>
+        <td><code>{ email, password }</code></td>
+        <td>Authenticates user. Rejects if unverified</td>
+      </tr>
+      <tr>
+        <td><span class="tag tag-emerald">POST</span></td>
+        <td><code>/api/auth/verify-otp</code></td>
+        <td>Public</td>
+        <td><code>{ email, otp }</code></td>
+        <td>Validates registration OTP & returns signed JWT</td>
+      </tr>
+      <tr>
+        <td><span class="tag tag-amber">PUT</span></td>
+        <td><code>/api/auth/profile</code></td>
+        <td>User (JWT)</td>
+        <td><code>{ name }</code></td>
+        <td>Updates authenticated user's display name</td>
+      </tr>
+      <tr>
+        <td><span class="tag tag-blue">GET</span></td>
+        <td><code>/api/events</code></td>
+        <td>Public</td>
+        <td>Query: <code>search</code>, <code>category</code></td>
+        <td>Returns list of events with debounced filter support</td>
+      </tr>
+      <tr>
+        <td><span class="tag tag-blue">GET</span></td>
+        <td><code>/api/events/:id</code></td>
+        <td>Public</td>
+        <td>Params: <code>id</code></td>
+        <td>Returns detailed event metadata & remaining seats</td>
+      </tr>
+      <tr>
+        <td><span class="tag tag-emerald">POST</span></td>
+        <td><code>/api/events</code></td>
+        <td>Admin (RBAC)</td>
+        <td><code>{ title, date, seats, price... }</code></td>
+        <td>Creates new event listing</td>
+      </tr>
+      <tr>
+        <td><span class="tag tag-rose">DELETE</span></td>
+        <td><code>/api/events/:id</code></td>
+        <td>Admin (RBAC)</td>
+        <td>Params: <code>id</code></td>
+        <td>Deletes event record from database</td>
+      </tr>
+      <tr>
+        <td><span class="tag tag-emerald">POST</span></td>
+        <td><code>/api/bookings/send-otp</code></td>
+        <td>User (JWT)</td>
+        <td>Headers: <code>Authorization</code></td>
+        <td>Generates and emails booking confirmation OTP</td>
+      </tr>
+      <tr>
+        <td><span class="tag tag-emerald">POST</span></td>
+        <td><code>/api/bookings</code></td>
+        <td>User (JWT)</td>
+        <td><code>{ eventId, otp }</code></td>
+        <td>Verifies OTP & creates pending booking</td>
+      </tr>
+      <tr>
+        <td><span class="tag tag-blue">GET</span></td>
+        <td><code>/api/bookings</code></td>
+        <td>User / Admin</td>
+        <td>Headers: <code>Authorization</code></td>
+        <td>Returns user's bookings (or all if admin)</td>
+      </tr>
+      <tr>
+        <td><span class="tag tag-amber">PUT</span></td>
+        <td><code>/api/bookings/:id/confirm</code></td>
+        <td>Admin (RBAC)</td>
+        <td><code>{ paymentStatus }</code></td>
+        <td>Confirms booking, decrements seat, emails user</td>
+      </tr>
+      <tr>
+        <td><span class="tag tag-rose">DELETE</span></td>
+        <td><code>/api/bookings/:id</code></td>
+        <td>User / Admin</td>
+        <td>Params: <code>id</code></td>
+        <td>Cancels booking request</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- ==================== SECTION 6 ==================== -->
+  <div class="section-title">
+    <span class="icon">06.</span> Top Interview Questions & Comprehensive Answers
+  </div>
+
+  <div class="qa-box">
+    <div class="qa-question">Q1: How do you design and secure the authentication architecture in Eventora?</div>
+    <div class="qa-answer">
+      "Authentication is stateless and uses a two-phase model:
+      <ol style="margin: 4px 0 0 0; padding-left: 18px;">
+        <li><strong>Password Encryption:</strong> Passwords are never stored as plaintext; they are salted and hashed using <code>bcryptjs</code> (10 rounds).</li>
+        <li><strong>Mandatory 2FA Email OTP:</strong> Accounts remain in an unverified state until the user validates a 6-digit OTP stored in MongoDB with a 5-minute TTL.</li>
+        <li><strong>JWT Token Management:</strong> Once verified, an encrypted JWT bearer token is signed containing the user ID and role. Sensitive fields like passwords are systematically projected out (<code>.select('-password')</code>) in database queries.</li>
+        <li><strong>Role-Based Access Control (RBAC):</strong> Custom Express middleware (<code>protect</code> and <code>admin</code>) decodes tokens and guards sensitive endpoints like event creation and booking approvals."</li>
+      </ol>
+    </div>
+  </div>
+
+  <div class="qa-box">
+    <div class="qa-question">Q2: How did you optimize frontend performance and handle state management?</div>
+    <div class="qa-answer">
+      "I avoided bloated third-party state managers by utilizing <strong>modular React Contexts</strong>:
+      <ul>
+        <li><code>AuthContext</code> handles session persistence and user login/logout states.</li>
+        <li><code>ThemeContext</code> manages light/dark mode persistence via <code>localStorage</code> and root class toggling.</li>
+        <li><code>ToastContext</code> renders animated alerts without blocking the render tree.</li>
+      </ul>
+      To optimize performance, search queries on the Home page are <strong>debounced by 400ms</strong>, eliminating redundant network calls on rapid keystrokes. Vite handles chunk bundling for minimal bundle footprint."
+    </div>
+  </div>
+
+  <div class="qa-box">
+    <div class="qa-question">Q3: What security measures did you implement against injection and unauthorized access?</div>
+    <div class="qa-answer">
+      "1. <strong>CORS Origin Whitelisting:</strong> Dynamic CORS validation ensures only trusted origins (e.g. configured frontend domain and local development ports) can interact with credentials enabled.<br>
+      2. <strong>Mongoose Schema Casting:</strong> Built-in schema validation protects against NoSQL injection.<br>
+      3. <strong>Sanitization:</strong> Trimmed environment variables to prevent newline injection bugs in API keys.<br>
+      4. <strong>Stateless Access:</strong> API tokens cannot be forged without the server's private <code>JWT_SECRET</code>."
+    </div>
+  </div>
+
+  <div class="qa-box">
+    <div class="qa-question">Q4: If you were taking Eventora to 100,000 concurrent users, what would you re-architect?</div>
+    <div class="qa-answer">
+      "1. <strong>Caching Layer:</strong> Move OTP storage and frequently queried events to <strong>Redis</strong> with automatic memory key expiration, offloading MongoDB write traffic.<br>
+      2. <strong>Asynchronous Event Queue:</strong> Offload email delivery to a background message queue like <strong>BullMQ / RabbitMQ</strong> with retry policies so HTTP request-response cycles are never blocked by external mail APIs.<br>
+      3. <strong>Atomic Seat Decrements:</strong> Use MongoDB atomic operations (<code>$inc</code> conditional on <code>$gt: 0</code>) or database transactions to prevent race conditions during flash ticket releases.<br>
+      4. <strong>CDN & S3 Storage:</strong> Offload uploaded event banner images to an S3 bucket with Cloudflare CDN caching."
+    </div>
+  </div>
+
+</body>
+</html>
